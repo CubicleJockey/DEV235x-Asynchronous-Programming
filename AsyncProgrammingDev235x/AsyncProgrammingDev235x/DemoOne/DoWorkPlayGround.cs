@@ -98,13 +98,21 @@ namespace AsyncProgrammingDev235x.DemoOne
         }
 
         [TestMethod]
-        public void FileNotFound()
+        public async Task FileNotFound()
         {
             var fullFilePath = Path.Combine(Environment.CurrentDirectory, "NoFileFoundHereBuddy.txt");
 
-            Action countNumberOfXmlNodesMethod = () => doWork.CountNumberOfXmlNodes(fullFilePath);
-
-            countNumberOfXmlNodesMethod.ShouldThrow<FileNotFoundException>();
+            string result;
+            try
+            {
+                result = await doWork.CountNumberOfXmlNodes(fullFilePath);
+            }
+            catch (FileNotFoundException)
+            {
+                return;
+            }
+            Assert.Fail($"Should have gotten a {nameof(FileNotFoundException)}.");
+            
         }
     }
 }
