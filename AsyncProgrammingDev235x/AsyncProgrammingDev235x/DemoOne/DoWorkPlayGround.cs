@@ -59,10 +59,12 @@ namespace AsyncProgrammingDev235x.DemoOne
         [TestMethod]
         public async Task XmlFileIoExample()
         {
+            //Looks like Mac/Linux use bin/Debug/netcoreapp2.0
             var path =
-                Path.Combine(Environment.CurrentDirectory.Replace(@"\bin\Debug\netcoreapp2.0", string.Empty),
-                             @"Files\books.xml");
+                Path.Combine(Environment.CurrentDirectory, "Files", "books.xml");
 
+            WriteLine($"File Path: [{path}]");
+            
             var file = new FileInfo(path);
 
             WriteLine($"File: [{file}].");
@@ -80,9 +82,10 @@ namespace AsyncProgrammingDev235x.DemoOne
         public async Task XmlFileIoExample_DoWorkWhileRunning()
         {
             var path =
-                Path.Combine(Environment.CurrentDirectory.Replace(@"\bin\Debug\netcoreapp2.0", string.Empty),
-                    @"Files\books.xml");
+                Path.Combine(Environment.CurrentDirectory, "Files", "books.xml");
 
+            WriteLine($"File Path: [{path}]");
+            
             var file = new FileInfo(path);
 
             WriteLine($"File: [{file}].");
