@@ -60,14 +60,10 @@ namespace AsyncProgrammingDev235x.DemoOne
         public async Task XmlFileIoExample()
         {
             //Looks like Mac/Linux use bin/Debug/netcoreapp2.0
-            var path =
+            var file =
                 Path.Combine(Environment.CurrentDirectory, "Files", "books.xml");
 
-            WriteLine($"File Path: [{path}]");
-            
-            var file = new FileInfo(path);
-
-            WriteLine($"File: [{file}].");
+            WriteLine($"File Path: [{file}]");
 
             var response = await doWork.CountNumberOfXmlNodes(file);
 
@@ -81,14 +77,10 @@ namespace AsyncProgrammingDev235x.DemoOne
         [TestMethod]
         public async Task XmlFileIoExample_DoWorkWhileRunning()
         {
-            var path =
+            var file =
                 Path.Combine(Environment.CurrentDirectory, "Files", "books.xml");
 
-            WriteLine($"File Path: [{path}]");
-            
-            var file = new FileInfo(path);
-
-            WriteLine($"File: [{file}].");
+            WriteLine($"File Path: [{file}]");
 
             //NOTE: Capturing the task triggers the execution
             var task = doWork.CountNumberOfXmlNodes(file);
@@ -103,6 +95,16 @@ namespace AsyncProgrammingDev235x.DemoOne
             WriteLine(response);
 
             response.Should().BeEquivalentTo("342 total nodes!");
+        }
+
+        [TestMethod]
+        public void FileNotFound()
+        {
+            var fullFilePath = Path.Combine(Environment.CurrentDirectory, "NoFileFoundHereBuddy.txt");
+
+            Action countNumberOfXmlNodesMethod = () => doWork.CountNumberOfXmlNodes(fullFilePath);
+
+            countNumberOfXmlNodesMethod.ShouldThrow<FileNotFoundException>();
         }
     }
 }
