@@ -102,10 +102,9 @@ namespace AsyncProgrammingDev235x.DemoOne
         {
             var fullFilePath = Path.Combine(Environment.CurrentDirectory, "NoFileFoundHereBuddy.txt");
 
-            string result;
             try
             {
-                result = await doWork.CountNumberOfXmlNodes(fullFilePath);
+                await doWork.CountNumberOfXmlNodes(fullFilePath);
             }
             catch (FileNotFoundException)
             {
