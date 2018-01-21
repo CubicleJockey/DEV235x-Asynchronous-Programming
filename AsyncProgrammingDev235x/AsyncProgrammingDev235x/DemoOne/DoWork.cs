@@ -10,6 +10,12 @@ namespace AsyncProgrammingDev235x.DemoOne
 {
     public class DoWork
     {
+
+        public DoWork()
+        {
+            
+        }
+        
         /// <summary>
         /// This is an example of how to get async resources from an API
         /// 
@@ -34,16 +40,18 @@ namespace AsyncProgrammingDev235x.DemoOne
 
         /// <summary>
         /// Example of xmlFile I/O async.
-        /// 
-        /// books.xml was created from https://msdn.microsoft.com/en-us/library/ms762271%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
+        /// books.xml was created from
+        /// https://msdn.microsoft.com/en-us/library/ms762271%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
         /// </summary>
-        /// <param name="xmlFile">Xml File</param>
+        /// <param name="file">Xml File</param>
         /// <returns></returns>
-        public async Task<string> CountNumberOfXmlNodes(FileInfo xmlFile)
+        public async Task<string> CountNumberOfXmlNodes(string file)
         {
-            xmlFile.Refresh();
-            if(!xmlFile.Exists) { throw new FileNotFoundException($"[{xmlFile.Name}] does not exist."); }
+            var xmlFile = new FileInfo(file);
 
+            xmlFile.Refresh();
+            if(!xmlFile.Exists) { throw new FileNotFoundException(); }
+            
             var count = 0;
 
             var settings = new XmlReaderSettings { Async = true };

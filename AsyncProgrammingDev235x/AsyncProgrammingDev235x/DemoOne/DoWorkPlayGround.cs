@@ -59,13 +59,11 @@ namespace AsyncProgrammingDev235x.DemoOne
         [TestMethod]
         public async Task XmlFileIoExample()
         {
-            var path =
-                Path.Combine(Environment.CurrentDirectory.Replace(@"\bin\Debug\netcoreapp2.0", string.Empty),
-                             @"Files\books.xml");
+            //Looks like Mac/Linux use bin/Debug/netcoreapp2.0
+            var file =
+                Path.Combine(Environment.CurrentDirectory, "Files", "books.xml");
 
-            var file = new FileInfo(path);
-
-            WriteLine($"File: [{file}].");
+            WriteLine($"File Path: [{file}]");
 
             var response = await doWork.CountNumberOfXmlNodes(file);
 
@@ -79,13 +77,10 @@ namespace AsyncProgrammingDev235x.DemoOne
         [TestMethod]
         public async Task XmlFileIoExample_DoWorkWhileRunning()
         {
-            var path =
-                Path.Combine(Environment.CurrentDirectory.Replace(@"\bin\Debug\netcoreapp2.0", string.Empty),
-                    @"Files\books.xml");
+            var file =
+                Path.Combine(Environment.CurrentDirectory, "Files", "books.xml");
 
-            var file = new FileInfo(path);
-
-            WriteLine($"File: [{file}].");
+            WriteLine($"File Path: [{file}]");
 
             //NOTE: Capturing the task triggers the execution
             var task = doWork.CountNumberOfXmlNodes(file);
@@ -100,6 +95,23 @@ namespace AsyncProgrammingDev235x.DemoOne
             WriteLine(response);
 
             response.Should().BeEquivalentTo("342 total nodes!");
+        }
+
+        [TestMethod]
+        public async Task FileNotFound()
+        {
+            var fullFilePath = Path.Combine(Environment.CurrentDirectory, "NoFileFoundHereBuddy.txt");
+
+            try
+            {
+                await doWork.CountNumberOfXmlNodes(fullFilePath);
+            }
+            catch (FileNotFoundException)
+            {
+                return;
+            }
+            Assert.Fail($"Should have gotten a {nameof(FileNotFoundException)}.");
+            
         }
     }
 }
