@@ -1,16 +1,16 @@
 ﻿using System;
 using static System.Console;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace Lab1
 {
     public class AsyncCoinManager
     {
 
-        public void AcquireAsyncCoin()
+        public async Task AcquireAsyncCoin()
         {
             WriteLine($"Start call to long-running service at {DateTime.Now}");
-            var result = PretendToConnectToCoinService();
+            var result = await PretendToConnectToCoinService();
             WriteLine($"Finish call to long-running service at {DateTime.Now}");
 
             DisplayResultAsRed(result);
@@ -26,9 +26,9 @@ namespace Lab1
             ForegroundColor = savedColor;
         }
 
-        private static string PretendToConnectToCoinService()
+        private static async Task<string> PretendToConnectToCoinService()
         {
-            Thread.Sleep(5000);
+            await Task.Delay(5000);
             return "You've gotten 25 Async Coins";
         }
     }

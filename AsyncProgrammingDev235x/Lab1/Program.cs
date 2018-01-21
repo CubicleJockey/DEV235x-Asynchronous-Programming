@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using System.Threading.Tasks;
+using static System.Console;
 
 namespace Lab1
 {
@@ -11,9 +12,13 @@ namespace Lab1
             asyncCoinManager = new  AsyncCoinManager();
         }
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            asyncCoinManager.AcquireAsyncCoin();
+            var aquireCoinsTask = asyncCoinManager.AcquireAsyncCoin();
+
+            WriteLine($"I am not blocked by the call to [{nameof(AsyncCoinManager.AcquireAsyncCoin)}] which was made in [{nameof(Main)}].");
+
+            await aquireCoinsTask;
 
             Write("Press any key to exit...");
             ReadLine();
